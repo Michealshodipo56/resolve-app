@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout app
+        uses: actions/checkout@v4
+        with:
+          path: resolve-app
+
+      - name: Checkout SDK sibling
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/resolve-sdk
+          path: resolve-sdk
+        continue-on-error: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: resolve-app/package-lock.json
+
+      - name: Build local SDK if present
+        working-directory: resolve-sdk
+        run: |
+          if [ -f package.json ]; then
+            npm install
+            npm run build
+          else
+            echo "resolve-sdk not checked out — ensure file:../resolve-sdk exists for local/CI"
+            exit 1
+          fi
+
+      - name: Install app
+        working-directory: resolve-app
+        run: npm install
+
+      - name: Lint
+        working-directory: resolve-app
+        run: npm run lint
+
+      - name: Typecheck
+        working-directory: resolve-app
+        run: npm run typecheck
+
+      - name: Test
+        working-directory: resolve-app
+        run: npm test
+
+      - name: Build
+        working-directory: resolve-app
+        run: npm run build
+        env:
+          NEXT_PUBLIC_STELLAR_NETWORK: testnet
+          NEXT_PUBLIC_NETWORK_PASSPHRASE: "Test SDF Network ; September 2015"
+          NEXT_PUBLIC_INDEXER_API_URL: http://localhost:3080
+          NEXT_PUBLIC_SOROBAN_RPC_URL: https://soroban-testnet.stellar.org
+          NEXT_PUBLIC_RESOLVE_CONTRACT_ID: CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHYQE
