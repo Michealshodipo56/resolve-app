@@ -24,7 +24,7 @@ Wallet → resolve-app → @resolve-protocol/sdk → Soroban RPC → Resolve Con
 
 - Next.js 15 (App Router) + TypeScript
 - Tailwind CSS
-- `@resolve-protocol/sdk` via `file:../resolve-sdk`
+- `@resolve-protocol/sdk` via `file:./vendor/resolve-sdk` (vendored build for deploy)
 - Stellar Wallets Kit for Freighter and other wallets
 
 ## Pages
@@ -41,7 +41,7 @@ Wallet → resolve-app → @resolve-protocol/sdk → Soroban RPC → Resolve Con
 ### Prerequisites
 
 - Node.js 20+
-- Built sibling SDK: `cd ../resolve-sdk && npm install && npm run build`
+- SDK is vendored at `vendor/resolve-sdk` (refresh after SDK changes: build sibling `../resolve-sdk`, then copy `dist` + `package.json`)
 - Optional indexer running (default `http://localhost:3080`)
 
 ### Install & run

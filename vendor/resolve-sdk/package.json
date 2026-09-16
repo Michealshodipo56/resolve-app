@@ -1,0 +1,29 @@
+{
+  "name": "@resolve-protocol/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for the Resolve prediction market protocol on Stellar/Soroban (vendored build)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@stellar/stellar-sdk": "^14.6.1"
+  }
+}
