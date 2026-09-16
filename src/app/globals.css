@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 100% -20%, rgba(15, 76, 58, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(18, 21, 26, 0.04), transparent);
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(15, 76, 58, 0.18);
+}
+
+*:focus-visible {
+  outline: 2px solid #0f4c3a;
+  outline-offset: 2px;
+}
